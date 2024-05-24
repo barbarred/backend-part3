@@ -5,6 +5,7 @@ const cors = require('cors')
 const app = express()
 
 app.use(express.json())
+app.use(express.static('dist'))
 
 morgan.token('post', function(req, res){
   if(req.method === 'POST'){
@@ -17,32 +18,6 @@ morgan.token('post', function(req, res){
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post'))
 app.use(cors())
 
-let persons = [
-    { 
-      "id": 1,
-      "name": "Arto Hellas", 
-      "number": "040-123456"
-    },
-    { 
-      "id": 2,
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
-    },
-    { 
-      "id": 3,
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
-    },
-    { 
-      "id": 4,
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
-    }
-]
-
-app.get('/', (req, res)=>{
-  res.send('Backend Part3 FullStackOpen')
-})
 //route to get all persons 
 app.get('/api/persons', (request, response)=>{
    response.json(persons)

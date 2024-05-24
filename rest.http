@@ -1,7 +1,11 @@
-POST http://localhost:3001/api/persons
+### get the resources
+GET https://backend-part3-1jud.onrender.com/api/persons
+
+### send new resource
+POST https://backend-part3-1jud.onrender.com/api/persons
 Content-Type: application/json
 
 {
-  "name": "Richy",
-  "number": "65874447"
+  "name": "El Rorri",
+  "number": "56-12-569874"
 }
