@@ -39,7 +39,10 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
- 
+
+app.get('/', (req, res)=>{
+  res.send('Backend Part3 FullStackOpen')
+})
 //route to get all persons 
 app.get('/api/persons', (request, response)=>{
    response.json(persons)
