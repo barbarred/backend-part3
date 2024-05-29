@@ -20,11 +20,11 @@ morgan.token('post', function(req, res){
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post'))
 app.use(cors())
 
-
+/*
 let persons = [
     { 
       "id": 1,
-      "name": "Arto Hellas T", 
+      "name": "Arto Hellas", 
       "number": "040-123456"
     },
     { 
@@ -42,36 +42,44 @@ let persons = [
       "name": "Mary Poppendieck", 
       "number": "39-23-6423122"
     }
-]
+]*/
 
 //route to get all persons 
 app.get('/api/persons', (request, response)=>{
-   response.json(persons)
+   Person.find({}).then(persons => {
+    response.json(persons)
+   })
 })
 
 // route to show some info about how many peoples has the phonebook
 app.get('/info', (request, response)=>{
-  const info = persons.length
+  const persons = Person.find({}).then(persons => {
+    JSON.stringify(persons)
+  })
   const date = new Date()
-  response.send(` <p>Phonebook has info for ${info} persons</p><p>${date}</p>`)
+  response.send(` <p>Phonebook has info for ${persons} persons</p><p>${date}</p>`)
 })
 
 // route to get person info by ID
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(p => p.id === id)
-
-  if(person){
+  Person.findById(request.params.id)
+  .then(person => {
     response.json(person)
-  }else{
-    response.status(404).end()
-  }
-  
+  })
+  .catch(error => {
+    return response.status(400).json({error: error.message})
+  })
 })
 
 // route to create person in the json file
 app.post('/api/persons', (request, response) => {
 
+  const body = request.body
+
+  if(body.personName === undefined){
+    return response.status(400).json({error: 'Person Name missing'})
+  }
+  /*
   const createId = () => {
     const min = 1
     const max = 10000
@@ -103,15 +111,20 @@ app.post('/api/persons', (request, response) => {
     person.id = id
     persons = persons.concat(person)
     response.json(person)
-  }
+  }*/
+
+  const person = new Person({
+    personName: body.personName,
+    number: body.number,
+  })
+  person.save().then(personSaved => {
+    response.json(personSaved)
+  })
 })
 
 // route to delete the person by ID
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-
-    response.status(202).end()
+   response.status(202).end()
 })
 
 

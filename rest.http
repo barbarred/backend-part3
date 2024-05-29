@@ -1,11 +1,14 @@
 ### get the resources
-GET https://backend-part3-1jud.onrender.com/api/persons
+GET http://localhost:3001/api/persons
 
 ### send new resource
-POST https://backend-part3-1jud.onrender.com/api/persons
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-  "name": "El Rorri",
-  "number": "56-12-569874"
+  "personName": "El Rorri",
+  "number": 64164878
 }
+### delete resource
+
+DELETE http://localhost:3001/api/persons/6654dcf8a50fe1afea3215b9
