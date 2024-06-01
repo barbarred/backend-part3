@@ -15,8 +15,21 @@ mongoose.connect(url)
   })
 
 const personSchema = new mongoose.Schema({
-  personName: String,
-  number: Number,
+  personName: {
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  number: {
+    type: String,
+    validate: {
+      validator: function(v){
+        return /\d{2}-\d{8}/.test(v)
+      },
+      message: 'the number format is incorrect '
+    },
+    required: true
+  }
 })
 
 personSchema.set('toJSON', {
