@@ -35,8 +35,8 @@ if(process.argv.length<4){
   })
 }else{
   const person = new Person({
-  personName: personName,
-  number: number,
+    personName: personName,
+    number: number,
   })
 
   person.save().then(result => {

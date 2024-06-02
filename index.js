@@ -46,14 +46,14 @@ let persons = [
 
 //route to get all persons 
 app.get('/api/persons', (request, response)=>{
-   Person.find({}).then(persons => {
+  Person.find({}).then(persons => {
     response.json(persons)
-   })
+  })
 })
 
 // route to show some info about how many peoples has the phonebook
 app.get('/info', (request, response)=>{
-    Person.find({}).then(persons => {
+  Person.find({}).then(persons => {
     const numberOfPersons = persons.length
     const date = new Date()
     response.send(` <p>Phonebook has info for ${numberOfPersons} persons</p><p>${date}</p>`)
@@ -63,12 +63,12 @@ app.get('/info', (request, response)=>{
 // route to get person info by ID
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-  .then(person => {
-    response.json(person)
-  })
-  .catch(error => {
-    next(error)
-  })
+    .then(person => {
+      response.json(person)
+    })
+    .catch(error => {
+      next(error)
+    })
 })
 
 // route to create person in the json file
@@ -126,15 +126,15 @@ app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
 
   const person = {
-    "personName": body.personName,
-    "number": body.number
+    'personName': body.personName,
+    'number': body.number
   }
 
   Person.findByIdAndUpdate(request.params.id, person, {new: true})
-  .then(personUpdated => {
-    response.json(personUpdated)
-  })
-  .catch(error => next(error))
+    .then(personUpdated => {
+      response.json(personUpdated)
+    })
+    .catch(error => next(error))
 })
 
 
